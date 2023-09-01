@@ -161,12 +161,12 @@ GROUP BY supplies;
 -- Find the months with the most patient intake (cross join)
 SELECT * FROM all_months;
 
-with month_cte as (select count(name) as count, m from patients
-cross join all_months
-where i = intake_date
-group by m )
-select m as busiest_month from month_cte
-where count = ( select max(count) from month_cte) ;
+WITH month_cte as (select count(name) as count, m from patients
+CROSS JOIN all_months
+WHERE i = intake_date
+GROUP BY m )
+SELECT m as busiest_month from month_cte
+WHERE COUNT = ( SELECT MAX(COUNT) FROM month_cte) ;
 
 -- Doctor, sub-doctors (interns, residents), patient tree
 SELECT doctors.name as head, GROUP_CONCAT(patients.name) as patients, GROUP_CONCAT(DISTINCT subs.name) as sub, subs.department from doctors
